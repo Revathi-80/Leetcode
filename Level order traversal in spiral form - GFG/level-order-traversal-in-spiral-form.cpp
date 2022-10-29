@@ -129,7 +129,7 @@ struct Node
 //Function to return a list containing the level order traversal in spiral form.
 vector<int> findSpiral(Node *root)
 {
-  vector<vector<int>>ans;
+ // vector<vector<int>>ans;
   vector<int>res;
     if(root==NULL)
     return res;
@@ -152,12 +152,10 @@ vector<int> findSpiral(Node *root)
                 
         }
          flag=!flag;
-         ans.push_back(level);
+         for(auto x: level){
+               res.push_back(x);
          }
-         for(auto x: ans){
-             for(auto y :x)
-               res.push_back(y);
          }
-        
+         
        return res;
 }
