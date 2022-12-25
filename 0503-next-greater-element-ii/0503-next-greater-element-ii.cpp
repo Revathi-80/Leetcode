@@ -4,15 +4,13 @@ public:
         
         int n=nums.size();
         vector<int>ans(n);
-        
-        for(int i=0;i<n;i++) {
-           ans[i]=-1;
-            for(int j=1;j<n;j++) {
-                if(nums[(i+j)%n]>nums[i]) {
-                    ans[i]=nums[(i+j)%n];
-                    break;
-                }
-            }
+        stack<int>s;
+        for(int i=2*(n-1);i>=0;i--) {
+         
+                while(s.size()>0 && nums[s.top()]<= nums[i%n]) 
+                    s.pop();
+                ans[i%n]= s.size() ? nums[s.top()] :-1;
+            s.push(i%n);
         }
         return ans;
     }
