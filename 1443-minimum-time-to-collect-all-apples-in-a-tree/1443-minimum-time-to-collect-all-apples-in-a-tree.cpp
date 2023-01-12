@@ -1,33 +1,22 @@
 class Solution {
-    unordered_map<int, vector<int>> g; 
-    unordered_map<int, bool> visited; 
-	
-    void createGraph(vector<vector<int>>& edges) {
-      for (auto e: edges) {
-        g[e[0]].push_back(e[1]); 
-		g[e[1]].push_back(e[0]); 
-      }
-    }
-  
-    int dfs(int node, int myCost, vector<bool>& hasApple) {
-	  if (visited[node]) {
-		  return 0;
-	  }
-	  visited[node] = true;
-	  
-      int childrenCost = 0; 
-      for (auto x: g[node]) { 
-        childrenCost += dfs(x, 2, hasApple);  
-      }
-
-      if (childrenCost == 0 && hasApple[node] == false) {
-        return 0;
-      }
-      return (childrenCost + myCost);
+    int dfs(int node, int parent, vector<vector<int>>&adj, vector<bool>&hasApple) {
+        int totaltime=0, childTime=0;
+        for(auto child : adj[node]) {
+            if(child==parent) continue;
+            childTime=dfs(child,node,adj,hasApple);
+            if(childTime || hasApple[child])
+                totaltime +=childTime+2;
+        }
+        return totaltime;
     }
 public:
     int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
-        createGraph(edges); 
-      return dfs(0, 0, hasApple);
+        vector<vector<int>>adj(n);
+        for(auto edge :edges) {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+            
+        }
+        return dfs(0,-1,adj,hasApple);
     }
 };
