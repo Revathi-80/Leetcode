@@ -1,10 +1,12 @@
 class Solution {
-   
+ 
 public:
     int tribonacci(int n) {
-     int dp[3] = {0, 1, 1};
-  for (int i = 3; i <= n; ++i)
-    dp[i%3] += dp[(i+1)%3] + dp[(i+2)%3];
-  return dp[n%3];
+      vector<int>dp(39);
+        dp[0]=0,dp[1]=1,dp[2]=1;
+        for(int i=3;i<38;i++) {
+            dp[i]=dp[i-1]+dp[i-2]+dp[i-3];
+        }
+        return dp[n];
     }
 };
