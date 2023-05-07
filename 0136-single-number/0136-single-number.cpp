@@ -2,15 +2,12 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int n=nums.size();
-        int maxi=0;
-        unordered_map<long long ,int>hash;
+        int xor1=0;
+       
         for(int i=0;i<n;i++) {
-            hash[nums[i]]++;
+           xor1^=nums[i];
         }
-        for(auto it :hash) {
-            if(it.second==1)
-                return it.first;
-        }
-        return 0;
+       
+        return xor1;
     }
 };
