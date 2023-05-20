@@ -1,22 +1,17 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-     int n=nums.size();
-        int ans=0;
-        int prefix[n];
-         prefix[0]=nums[0];
-        for(int i=1;i<n;i++){
-            prefix[i]=prefix[i-1]+nums[i];
+      int n=nums.size();
+        int prefix=0,cnt=0;
+        unordered_map<int,int>mpp;
+        mpp[0]=1;
+        for(int i=0;i<n;i++) {
+            prefix+=nums[i];
+            int sum=prefix-k;
+            cnt+=mpp[sum];
+            mpp[prefix]+=1;
+           // cout<<sum<<" "<<mpp[sum]<<" "<<cnt<<endl;
         }
-        unordered_map<int,int>mp;
-    for(int i=0;i<n;i++){
-        if(prefix[i]==k)
-            ans++;
-        if(mp.find(prefix[i]-k)!=mp.end()){
-            ans+=mp[prefix[i]-k];
-        }
-        mp[prefix[i]]++;
-    }
-        return ans;
+        return cnt;
     }
 };
