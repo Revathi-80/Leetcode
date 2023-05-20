@@ -9,15 +9,15 @@
  * };
  */
 class Solution {
-    void swapH(ListNode* head) {
-        if(head==NULL || head->next==NULL)
-            return ;
-        swap(head->val,head->next->val);
-        swapH(head->next->next);
-    }
+   
 public:
     ListNode* swapPairs(ListNode* head) {
-        swapH(head);
-        return head;
+        if(head==NULL || head->next==NULL)
+            return head;
+        ListNode* temp=head->next;
+        
+        head->next=swapPairs(head->next->next);
+        temp->next=head;
+        return temp;
     }
 };
