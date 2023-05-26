@@ -10,17 +10,22 @@
  * };
  */
 class Solution {
-    int findMax(TreeNode* root, int& maxi) {
-        if(root==0) return 0;
-        int lh=findMax(root->left,maxi);
+private:
+    int findMax (TreeNode * root,int& maxi) {
+        if(root==NULL)
+            return 0;
+        int lh= findMax(root->left,maxi);
         int rh=findMax(root->right,maxi);
-        maxi=max(lh+rh,maxi);
+        maxi=max(maxi,lh+rh);
+        
         return 1+max(lh,rh);
+        
     }
 public:
     int diameterOfBinaryTree(TreeNode* root) {
         int maxi=0;
-        int h=findMax(root,maxi);
-        return maxi;
+        int diameter=findMax(root,maxi);
+        
+        return maxi; 
     }
 };
