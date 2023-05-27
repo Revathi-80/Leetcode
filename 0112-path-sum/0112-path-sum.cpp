@@ -16,6 +16,7 @@ bool hasPath(TreeNode* root,int target,int sum) {
            sum=sum+root->val;
            if(sum==target)
          return true;
+           else false;
        }
         int lh = hasPath(root->left,target,sum+root->val);
         int rh = hasPath(root->right,target,sum+root->val);
