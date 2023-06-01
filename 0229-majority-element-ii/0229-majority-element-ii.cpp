@@ -1,41 +1,31 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        set<int>ans;
-        vector<int>v;
-        int num1=-1,num2=-1,cnt1=0,cnt2=0;
-        for(int ele:nums) {
-            if(ele==num1)
-                cnt1++;
-            else if(ele==num2)
-                cnt2++;
-            else if(cnt1==0) {
-                num1=ele;
+        int cnt1=0,cnt2=0;
+        int el1=INT_MIN,el2=INT_MIN;
+        int n=nums.size();
+        for(int i=0;i<n;i++) {
+            if(cnt1==0 && el2!=nums[i]) {
                 cnt1=1;
+                el1=nums[i];
             }
-            else if(cnt2==0) {
-                num2=ele;
+            else if(cnt2==0 && el1!=nums[i]) {
                 cnt2=1;
+                el2=nums[i];
             }
-            else {
-                cnt1--;
-                cnt2--;
-            }
+            else if(el1==nums[i]) cnt1++;
+            else if(el2==nums[i]) cnt2++;
+            else cnt1--,cnt2--;
+        }      
+        vector<int>ds;
+        cnt1=0,cnt2=0;
+        for(int i=0;i<n;i++) {
+            if(el1==nums[i]) cnt1++;
+            if(el2==nums[i]) cnt2++;
         }
-        int count1=0,count2=0;
-        for(int i:nums) {
-            if(i==num1)
-                count1++;
-            if(i==num2)
-                count2++;
-        }
-        if(count1>nums.size()/3)
-            ans.insert(num1);
-        if(count2>nums.size()/3)
-            ans.insert(num2);
-        for(int x:ans)
-            v.push_back(x);
-        return v;
-        
+        int mini=(int)(n/3)+1;
+        if(cnt1>=mini) ds.push_back(el1);
+        if(cnt2>=mini) ds.push_back(el2);
+        return ds;
     }
 };
