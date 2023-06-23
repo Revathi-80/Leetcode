@@ -8,12 +8,12 @@ public:
             if(letters[mid]<=target){
                 start=mid+1;
             }
-            else {
-                ans=letters[mid];
+            else if (target<letters[mid]) {
+                // ans=letters[mid];
                 end=mid-1;
                 
             }
         }
-        return ans=='#'?letters[0]:ans;
+        return letters[start% letters.size()];
     }
 };
