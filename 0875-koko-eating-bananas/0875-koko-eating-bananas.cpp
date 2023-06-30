@@ -6,14 +6,14 @@ class Solution {
         }
         return ans;
     }
-    bool check(vector<int>&piles,int h,int mid){
+    long check(vector<int>&piles,int h,int mid){
         long time=0;
         for(long x: piles){
             // time += (x)/mid;
             // if(x%mid!=0) time++;
             time += (x+mid-1)/mid;
         }
-        return (time<=h);
+        return time;
     }
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
@@ -23,7 +23,7 @@ public:
         while(low<=high){
             int mid= low +(high-low)/2;
             
-            if(check(piles,h,mid)){
+            if(check(piles,h,mid)<=h){
                 high=mid-1;
             }
             else {
