@@ -9,8 +9,9 @@ class Solution {
     bool check(vector<int>&piles,int h,int mid){
         long time=0;
         for(long x: piles){
-            time += (x)/mid;
-            if(x%mid!=0) time++;
+            // time += (x)/mid;
+            // if(x%mid!=0) time++;
+            time += (x+mid-1)/mid;
         }
         return (time<=h);
     }
