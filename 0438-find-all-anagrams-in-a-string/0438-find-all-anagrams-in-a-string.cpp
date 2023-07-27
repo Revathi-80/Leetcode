@@ -1,36 +1,36 @@
 class Solution {
 public:
-    vector<int> findAnagrams(string s, string p) {
-        vector<int> ans;
-        vector<int> hash(26, 0);
-        vector<int> phash(26, 0);
-        int window = p.size();
-        int len = s.size();
-        if(len < window)
-        {
-            return ans;
+    vector<int> findAnagrams(string txt, string p) {
+        int n=txt.size(),k=p.size();
+        unordered_map<char,int>mpp;
+        for(int a=0;a<k;a++){
+            mpp[p[a]]++;
         }
-        int left = 0,right = 0;
-        while(right < window)
-        {
-            phash[p[right] - 'a'] += 1;
-            hash[s[right] - 'a'] += 1;
-            right++;
-        }
-        right -=1;
-        while(right < len)
-        {
-            if(phash == hash)
-            {
-                ans.push_back(left);
+        int i=0,j=0;
+        vector<int>ans;
+        int cnt=mpp.size();
+        while(j<n){
+            //calculations
+            if(mpp.find(txt[j])!=mpp.end()){
+                mpp[txt[j]]--;
+                if(mpp[txt[j]]==0)
+                    cnt--;
             }
-            right+=1;
-            if(right != len)
-            {
-                hash[s[right] - 'a'] += 1;
+            if(j-i+1 < k){
+                j++;
             }
-            hash[s[left] - 'a'] -=1 ;
-            left += 1;
+            else if(j-i+1==k){
+                //ans---calculations
+                if(cnt==0)
+                    ans.push_back(i);
+                //slide
+                if(mpp.find(txt[i])!=mpp.end()){
+                    mpp[txt[i]]++;
+                    if(mpp[txt[i]]==1)
+                        cnt++;
+                }
+                i++,j++;
+            }
         }
         return ans;
     }
