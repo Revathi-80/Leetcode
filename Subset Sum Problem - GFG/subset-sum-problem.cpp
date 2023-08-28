@@ -22,9 +22,18 @@ private:
 public:
     bool isSubsetSum(vector<int>arr, int sum){
         int n=arr.size();
-        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
-
-        subsets(arr,n-1,sum,dp);
+        vector<vector<bool>>dp(n+1,vector<bool>(sum+1,false));
+        for(int i=0;i<n;i++ ) dp[i][0]=true;
+        dp[0][arr[0]]=true;
+        for(int ind=1;ind<n;ind++){
+            for(int j=1;j<=sum;j++) {
+                bool nottake = dp[ind-1][j];
+                bool take=false;
+                if(j>=arr[ind])
+                    take=dp[ind-1][j-arr[ind]];
+                dp[ind][j]=take||nottake;
+            }
+        }
         return dp[n-1][sum];
     }
 };
