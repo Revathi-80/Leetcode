@@ -22,19 +22,20 @@ private:
 public:
     bool isSubsetSum(vector<int>arr, int sum){
         int n=arr.size();
-        vector<vector<bool>>dp(n+1,vector<bool>(sum+1,false));
-        for(int i=0;i<n;i++ ) dp[i][0]=true;
-        dp[0][arr[0]]=true;
+        vector<bool>prev(sum+1,0),curr(sum+1,0);
+        prev[0]=curr[0]=1;
+        prev[arr[0]]=1;
         for(int ind=1;ind<n;ind++){
             for(int j=1;j<=sum;j++) {
-                bool nottake = dp[ind-1][j];
+                bool nottake = prev[j];
                 bool take=false;
                 if(j>=arr[ind])
-                    take=dp[ind-1][j-arr[ind]];
-                dp[ind][j]=take||nottake;
+                    take=prev[j-arr[ind]];
+               curr[j]=take|nottake;
             }
+            prev=curr;
         }
-        return dp[n-1][sum];
+        return prev[sum];
     }
 };
 
