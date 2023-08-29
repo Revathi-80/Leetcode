@@ -1,29 +1,22 @@
 class Solution {
-    bool subsetSum(vector<int>&nums, int sum) {
-        int n=nums.size();
-        bool dp[n+1][sum+1];
-        for(int i=0;i<=n;i++) 
-            dp[i][0]=true;
-        for(int j=1;j<=sum;j++)
-            dp[0][j]=false;
-        for(int i=1;i<=n;i++) {
-            for(int j=1;j<=sum;j++) {
-                if(nums[i-1]<=j)
-                    dp[i][j]= dp[i-1][j-nums[i-1]] || dp[i-1][j];
-                else
-                    dp[i][j]=dp[i-1][j];
-            }
-        }
-        return dp[n][sum];
+    bool func(vector<int>&nums, int ind,int sum,int target,vector<vector<int>>&dp) {
+        if(sum==target) return true;
+        if(sum==0) return false;
+        if(ind==0) return (target+nums[0])==(sum-nums[0]);
+        if(dp[ind][sum]!=-1) return dp[ind][sum];
+        bool nottake= func(nums,ind-1,sum,target,dp);
+        bool take = false;
+        if(sum>=nums[ind]) 
+            take= func(nums,ind-1,sum-nums[ind],target+nums[ind],dp);
+        return dp[ind][sum]=take || nottake;
+        
     }
 public:
     bool canPartition(vector<int>& nums) {
         int sum=0;
-        for(int i=0;i<nums.size();i++)
-            sum+=nums[i];
-        if(sum%2!=0)
-            return false;
-        else
-        return subsetSum(nums,sum/2);
+        int n=nums.size();
+        for(int i=0;i<n;i++) sum+=nums[i];
+        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+        return func(nums,n-1,sum,0,dp);
     }
 };
