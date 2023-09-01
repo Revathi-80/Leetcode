@@ -1,18 +1,12 @@
 class Solution {
-private:
-    int count(int x){
-        int sum=0;
-        while(x) {
-            sum+= (x&1);
-            x>>=1;
-        }
-        return sum;
-    }
 public:
     vector<int> countBits(int n) {
-       vector<int>ans(n+1);
-        for(int i=0;i<=n;i++){
-            ans[i]=count(i);
+       vector<int>ans(n+1,0);
+        for(int i=1;i<=n;i++){
+            if(i%2!=0)
+                ans[i] =ans[i/2]+1;
+            else
+                ans[i]=ans[i/2];
         }
         return ans;
     }
