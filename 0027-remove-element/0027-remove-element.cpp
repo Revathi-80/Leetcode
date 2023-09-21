@@ -1,17 +1,17 @@
 class Solution {
 public:
-    int removeElement(vector<int>& nums, int val) {
-        int cnt=0,n= nums.size(),i=0,j=n-1;
+    int removeElement(vector<int>& arr, int val) {
+        int n=arr.size();
+        int i=0,j=n-1;
         while(i<=j) {
-            if(nums[i]==val){
-                cnt++;
-                swap(nums[i],nums[j]);
-                j--;
-            }
-            else {
+            if(arr[i] != val) {
                 i++;
             }
+            else {
+                swap(arr[i],arr[j]);
+                j--;
+            }
         }
-        return n-cnt;
+        return i;
     }
 };
