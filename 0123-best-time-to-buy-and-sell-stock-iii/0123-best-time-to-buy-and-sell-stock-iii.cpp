@@ -14,7 +14,21 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int n= prices.size();
-        vector<vector<int>>dp(n+1,vector<int>(4,-1));
-        return f(prices,n,0,0,dp);
+        vector<vector<int>>dp(n+1,vector<int>(5,0));
+        
+        for(int ind=n-1;ind>=0;ind--) {
+            for(int tran=3;tran>=0;tran--) {
+                if(tran%2==0) {
+                     dp[ind][tran]=max(-prices[ind] +dp[ind+1][tran+1],
+                       0 + dp[ind+1][tran]);
+                }
+                else {
+                     dp[ind][tran]=max(prices[ind] + dp[ind+1][tran+1],
+                       0 + dp[ind+1][tran]);
+                 }
+            }
+        }
+        
+        return dp[0][0];
     }
 };
